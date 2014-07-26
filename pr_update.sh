@@ -8,9 +8,15 @@ fi
 
 curl --silent http://www.mccain.senate.gov/public/index.cfm/press-releases >> newFile
 UPDATED=`diff oldFile newFile`
+
 if [[ -z $UPDATED ]]
 then
 	echo "No updates."
+	exit
 else
-	echo "Updates available."
+	echo "Updates available:"
+	UPDATEURL=`grep -o -m 1 "<a\ href=\"http://www.mccain.senate.gov\/.*class=\"ContentGrid.*a>" newFile | cut -d '"' -f2` 
+	#UPDATEURL=`grep -o "href\".*\"" $UPDATEURL`
+	echo $UPDATEURL
 fi
+
